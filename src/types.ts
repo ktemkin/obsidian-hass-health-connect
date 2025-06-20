@@ -6,7 +6,7 @@
 /// A string in YYYY-MM-DD format.
 export type date = string
 
-/// A unix timestamp.
+/// A unix timestamp, in seconds since the epoch.
 export type timestamp = number
 
 /// An integer number of seconds.
