@@ -1,0 +1,10 @@
+{
+	"id": "hass-health-connect",
+	"name": "HASS Health Connect",
+	"version": "0.0.1",
+	"minAppVersion": "0.15.0",
+	"description": "Pulls in data from the HASS health-connector app",
+	"author": "Kate Temkin",
+	"authorUrl": "https://ktemk.in",
+	"isDesktopOnly": false
+}
