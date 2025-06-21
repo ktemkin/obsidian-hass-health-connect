@@ -17,6 +17,10 @@ interface HassConnectSettings {
     /// Determines if we should automatically create daily notes.
     create_daily_notes: boolean
 
+    /// Whether to format times, which makes them more human readable.
+    /// If they're unfomatted, they work better with charting and machine tools.
+    format_times: boolean,
+
     /// Subfolder in which table section data should be placed,
     /// or an empty string to put the data inline.
     tables_subfolder: string
@@ -60,6 +64,7 @@ const DEFAULT_SETTINGS: HassConnectSettings = {
     tables_subfolder: "tables",
     create_daily_notes: true,
     refresh_interval: 1000 * 60 * 60 * 6,
+    format_times: false,
 
     calorie_field: "Active Calories",
     exercise_field: "Exercise Minutes",
@@ -137,6 +142,9 @@ export default class HassConnectPlugin extends Plugin {
         await this.updateSteps(sensorData.steps)
         await this.updateWeight(sensorData.weight)
         await this.updateSummary()
+
+        // This was a long-running operation, so notify that we're done.
+        new Notice("Health Connect data sync'd.")
     }
 
     private async updateSummary() {
@@ -357,7 +365,8 @@ export default class HassConnectPlugin extends Plugin {
 
 
     private renderTime(time: timestamp): string {
-        return window.moment(time, "X").format("HH:mm:ss")
+        let formatting = this.settings.format_times ? "HH:mm:ss" : "YYYY-MM-DD HH:mm:ss"
+        return window.moment(time, "X").format(formatting)
     }
 
 
